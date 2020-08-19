@@ -23,12 +23,12 @@ Ejemplo de creación de una API y Aplicación web en PHP, que permite a los usua
 
 
 ### Instalación
-**Mediante GIT**
+**Mediante GIT**  
 Clonar el repositorio mediante GIT
 ```sh
 $ git clone https://github.com/cbocaz/apidemo.git
 ```
-**Mediante descarga**
+**Mediante descarga**  
 Descargar y descomprimir el archivo zip desde la siguiente URL:
 https://github.com/cbocaz/apidemo/archive/master.zip
 
@@ -59,7 +59,7 @@ VALUES
 UNLOCK TABLES;
 ```
 ### Configuración
-**Configuración de la API**
+**Configuración de la API**  
 Se debe configurar los parámetros de la base de datos en el archivo ubicado en la ruta:
 ```
 Apis/v1/Config/api_config.php
@@ -75,7 +75,7 @@ Los parámetros que se deben configurar son los siguientes:
 ```
 De momento, se utiliza un usuario y password temporal de acceso a la API, que posteriormente será modificado para hacer uso de JWT
 
-**Configuración de la APP**
+**Configuración de la APP**  
 La aplicación web, contiene un archivo de configuración separado de la API, ubicado en la ruta:
 ```
 App/Config/front_config.php
