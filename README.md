@@ -86,7 +86,7 @@ La aplicación y la Api deben ser levantadas en hilos distintos del servidor int
 Esto es necesario porque se utiliza Curl para el consumo de la API.  
 Ref: https://stackoverflow.com/a/57572727
 
-La apliación, mediante puerto 80 y el enrutador app_router.php.
+La aplicación, mediante puerto 80 y el enrutador app_router.php.
 
 La Api Rest, mediante puerto 8080 y el enrutador api_router.php.
 
@@ -104,7 +104,7 @@ Para ambientes basados en linux, es necesario ejecutar los comandos con sudo.
 
 Luego, desde un navegador web, ingresar la url:
 ```
-htp://localhost
+http://localhost
 ```
 
 Finalmente, los password de los usuarios son almacenados en MD5.
