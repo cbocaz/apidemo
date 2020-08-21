@@ -16,6 +16,7 @@ Ejemplo de creación de una API y Aplicación web en PHP, que permite a los usua
   - Ocultar funcionalidades de escritura para usuarios normales.
   - Muestra fecha de última conexión.
   - Muestra Nombre del usuario conectado
+  - Impide uso de funcionalidades de escritura a usuarios normales.
   - Cierre de sesión por inactividad de usuario (**pendiente**).
 
 ### Requerimientos
@@ -114,8 +115,23 @@ Administrador
 cbocaz:test
 
 Usuarios Normales  
-user1:user1
+user1:user1  
 user2:user2
+
+Los EndPoints creados para éste ejemplo, fueron registrados en /api_router.php y son los siguientes:  
+
+- /api/v1/user/logIn
+
+- /api/v1/user/getAll
+
+- /api/v1/user/createUser
+
+- /api/v1/user/deleteUser
+
+- /api/v1/user/getUser
+
+- /api/v1/user/updateUser
+
 
 ### To-do
 
