@@ -16,7 +16,7 @@
           if (is_file($path)) {
               header("Content-Type: {$mimeTypes[$match[0]]}");
               require $path;
-              exit;
+              die();
           }
       }
     }
@@ -28,9 +28,6 @@
     }
 
     switch ($request) {
-        /*
-          APP URLs.
-        */
         case '/' :
             require __DIR__ . '/App/Views/login.php';
             break;
@@ -41,25 +38,28 @@
             require __DIR__ . '/App/Views/login.php';
             break;
         case '/Home' :
-            require __DIR__ . '/App/Views/home.php';
+            require __DIR__ . '/App/index.php';
             break;
         case '/login/makeLogin':
             require __DIR__ . '/App/index.php';
             break;
-         /*
-         API URLs
-         Las urls para la API están basadas en el arquetipo de controlador:
-            /api/v1/[controlador]/[metodo]/{id}
-            Version: v1
-            Controlador: Controlador en minúsculas.
-            Método: Método del controlador que ejecuta la acción, formato camelCase (primer caracter minúscula).
-            id: identificador del elemento.
-         */
-        case '/api/v1/user/logIn' :
-            require __DIR__ . '/Apis/v1/index.php';
+        case '/login/logOut':
+            require __DIR__ . '/App/index.php';
             break;
-        case '/api/v1/user/getAll' :
-            require __DIR__ . '/Apis/v1/index.php';
+        case '/user/newUser':
+            require __DIR__ . '/App/index.php';
+            break;
+        case '/user/editUser/?':
+            require __DIR__ . '/App/index.php';
+            break;
+        case '/user/createUser':
+            require __DIR__ . '/App/index.php';
+            break;
+        case '/user/deleteUser/?':
+            require __DIR__ . '/App/index.php';
+            break;
+        case '/user/updateUser':
+            require __DIR__ . '/App/index.php';
             break;
         default:
             http_response_code(404);

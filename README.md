@@ -7,19 +7,22 @@ Ejemplo de creación de una API y Aplicación web en PHP, que permite a los usua
 
   - Permite usuarios de tipo administrador.
   - Api separada de la aplicación web.
-  - Autenticación mediante JWT (pendiente).
-  - Enrutador de Requests.
+  - Autenticación mediante JWT.
+  - Enrutador de Requests para Aplicación y Api.
   - Listar usuarios en Home.
-  - Crear usuario (pendiente).
-  - Editar usuario (pendiente).
-  - Eliminar usuario (pendiente).
-  - Ocultar funcionalidades de escritura para usuarios normales (pendiente).
-  - Cierre de sesión por inactividad de usuario (pendiente).
+  - Crear usuario.
+  - Editar usuario.
+  - Eliminar usuario.
+  - Ocultar funcionalidades de escritura para usuarios normales.
+  - Muestra fecha de última conexión.
+  - Muestra Nombre del usuario conectado
+  - Cierre de sesión por inactividad de usuario (**pendiente**).
 
 ### Requerimientos
   - PHP 7+
   - Base de datos MySQL o María Database.
   - PDO - Mysql
+  - Curl
 
 
 ### Instalación
@@ -43,20 +46,23 @@ CREATE TABLE `users` (
   `password` varchar(50) NOT NULL DEFAULT '',
   `fullname` varchar(100) NOT NULL DEFAULT '',
   `admin` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `lastlogin` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `username`, `password`, `fullname`, `admin`)
+INSERT INTO `users` (`id`, `username`, `password`, `fullname`, `admin`, `lastlogin`)
 VALUES
-	(1,'cbocaz','098f6bcd4621d373cade4e832627b4f6','Christian Bocaz',1),
-	(2,'user1','24c9e15e52afc47c225b757e7bee1f9d','Usuario 1',NULL),
-	(3,'user2','7e58d63b60197ceb55a1c487989a3720','Usuario 2',NULL);
+	(1,'cbocaz','098f6bcd4621d373cade4e832627b4f6','Christian Bocaz',1,'2020-08-21 08:32:28'),
+	(2,'user1','24c9e15e52afc47c225b757e7bee1f9d','Usuario 1',NULL,NULL),
+	(3,'user2','098f6bcd4621d373cade4e832627b4f6','Usuario 2',1,'2020-08-21 10:21:29');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
 ```
 ### Configuración
 **Configuración de la API**  
@@ -66,47 +72,55 @@ Apis/v1/Config/api_config.php
 ```
 Los parámetros que se deben configurar son los siguientes:
 ```php
-    define('BACKEND_API_USER','admin'); //Usuario temporal para otorgar acceso a la API
-    define('BACKEND_API_PASSWORD','admin');//Password temporal para otorgar acceso a la API
+    define('BACKEND_API_KEY','953a3220084d73ea9948e3046c3c242d'); //Key para otorgar acceso a la API
     define('DB_HOST','127.0.0.1'); //Host de Myslq
     define('DB_USER','root'); //Usuario de acceso a la base de datos
     define('DB_PASSWORD',''); //Password de acceso a la base de datos
     define('DB_DATABASE','api_cs'); //Nombre de la base de datos
 ```
-De momento, se utiliza un usuario y password temporal de acceso a la API, que posteriormente será modificado para hacer uso de JWT
 
-**Configuración de la APP**  
-La aplicación web, contiene un archivo de configuración separado de la API, ubicado en la ruta:
-```
-App/Config/front_config.php
-```
-Los parámetros a configurar son los siguientes:
-```php
-    define('FRONT_API_USER','admin'); //Usuario temporal para acceder a la API
-    define('FRONT_API_PASSWORD','admin');//Password temporal para acceder a la API
-```
 ### Testing
 
-Para levantar la aplicación, se debe realizar mediante el servidor web interno de PHP, utilizando como enrutador el archivo index.php ubicado en la raíz.
+La aplicación y la Api deben ser levantadas en hilos distintos del servidor interno de PHP.  
+Esto es necesario porque se utiliza Curl para el consumo de la API.  
+Ref: https://stackoverflow.com/a/57572727
+
+La apliación, mediante puerto 80 y el enrutador app_router.php.
+
+La Api Rest, mediante puerto 8080 y el enrutador api_router.php.
 
 ```sh
 $ cd [ruta_del_proyecto]
-$ php -S 127.0.0.1:80 index.php
+$ php -S 127.0.0.1:80 app_router.php
 ```
+Otra ventana de terminal
+```sh
+$ cd [ruta_del_proyecto]
+$ php -S 127.0.0.1:8080 api_router.php
+```
+
+Para ambientes basados en linux, es necesario ejecutar los comandos con sudo.
+
 Luego, desde un navegador web, ingresar la url:
 ```
 htp://localhost
 ```
 
+Finalmente, los password de los usuarios son almacenados en MD5.
 
+Los usuarios creados mediante el script poseen las siguientes credenciales:
+
+Administrador  
+cbocaz:test
+
+Usuarios Normales  
+user1:user1
+user2:user2
 
 ### To-do
 
- - Completar la autenticación de usuarios mediante JWT.
- - Crear las funcionalidades de Agregar, Editar y Eliminar usuarios.
- - Bloquear a usuarios normales el acceso a las funcionalidades de escritura en usuarios.
- - Crear funcionalidad de cierre de sesión por inactividad.
- - Agregar comentarios al código
+ - Cierre de sesión por inactividad de usuario.
+
 
 Licencia
 ----

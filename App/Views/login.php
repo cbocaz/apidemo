@@ -14,8 +14,8 @@
   <div class="wrapper fadeInDown">
     <div id="formContent">
       <form id="loginform">
-        <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
-        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+        <input type="text" id="username" class="fadeIn second loginInput" name="username" placeholder="Username">
+        <input type="password" id="password" class="fadeIn third loginInput" name="password" placeholder="Password">
         <input type="submit" class="fadeIn fourth" value="Login">
       </form>
     </div>
@@ -36,7 +36,8 @@
               data: { username: $('#username').val(), password: $('#password').val() },
               statusCode: {
                   401: function(msg) {
-                      $("#loginerror").html(msg.responseText);
+                      var response = JSON.parse(msg.responseText);
+                      $("#loginerror").html(response.message);
                       $("#loginerror").fadeIn();
                   },
                   200: function(msg){
